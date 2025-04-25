@@ -4,116 +4,133 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Document</title>
+  <title>AVS College of Arts and Science - Courses</title>
+  <link rel="icon" href="https://www.avscollege.ac.in/images/logo.png">
   <link rel="stylesheet" href="Style.css"/>
 </head>
 <body>
-  <!-- Header -->
-  <div class="header">
-    <button>Back</button>
-    <h1>Add/Edit Case ⚙️</h1>
-    <button id="saveBtn">Save</button>
-  </div>
-
-  <div class="container">
-    <!-- Left Panel -->
-    <div class="left-panel">
-      <h3>Used Fields</h3>
-      <input class="search-box" type="text" placeholder="Search fields..." />
-      <div class="field-item">Date Opened <span style="float:right">Date</span></div>
-      <div class="field-item">Description of the issue <span style="float:right">Text area</span></div>
-      <div class="field-item">Compensation & Benefits <span style="float:right">Pull-Down<br>multiselect</span></div>
-      <div class="field-item">Evaluative Relationships <span style="float:right">Pull-Down<br>multiselect</span></div>
-      <div class="field-item">Peer and Colleague Relationships <span style="float:right">Pull-Down multiselect</span></div>
-      <div class="field-item">Legal, Regulatory, and Finance <span style="float:right">Checkbox multiselect</span></div>
-      <div class="field-item">Risk to Organization <span style="float:right">Long Text</span></div>
-      <div class="field-item">Issue Impact on Organization <span style="float:right">Text area</span></div>
-    </div>
-
-    <!-- Middle Panel -->
-    <div class="middle-panel">
-      <div class="header-row toggle-header">
-        <span>📁 Case Details</span>
-        <span class="icons">
-            <span id="upArrow" style="cursor:pointer; margin-right: 8px;">↑</span>
-            <span id="downArrow" style="cursor:pointer; margin-right: 8px;">↓</span>
-            <button id="deleteSelected">🗑️</button>
-          </span>
-          
+  <header>
+    <nav class="navbar">
+      <div class="logo">🎓 EduCampus</div>
+      <ul class="nav-links">
+        <li><a href="#">Home</a></li>
+        <li><a onclick="openCoursePopup()">Courses List ▾</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#" onclick="openContactModal()">Contact Us</a></li>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#login">Login</a></li>
+      </ul>
+    </nav>
+  </header>
+  
+  <!-- Popup Modal -->
+  <div id="coursePopup" class="course-popup">
+    <div class="course-popup-content">
+      <span class="close-popup" onclick="closeCoursePopup()">×</span>
+      <h2 id="coursePopupTitle">UG Courses</h2>
+  
+      <div id="coursePopupList" class="course-list">
+        <!-- Filled dynamically -->
       </div>
-
-      <!-- Field container (toggle target) -->
-      <div class="section-body">
-        <div class="field-group">
-          <input type="checkbox" class="select-field">
-          <div class="field-name">Case ID</div>
-          <div>Text - 50</div>
-
-        </div>
-      
-        <div class="field-group">
-          <input type="checkbox" class="select-field">
-          <div class="field-name">Date Initiated</div>
-          <div>Date</div>
-
-        </div>
-      
-        <div class="field-group">
-          <input type="checkbox" class="select-field">
-          <div class="field-name">Case Name</div>
-          <div>Text - 50</div>
-
-        </div>
-      
-        <div class="field-group">
-          <input type="checkbox" class="select-field">
-          <div class="field-name">Case Status</div>
-          <div>Pull-down box</div>
-
-        </div>
-      
-        <div class="field-group">
-          <input type="checkbox" class="select-field">
-          <div class="field-name">Referral Source</div>
-          <div>Pull-down box</div>
-
-        </div>
-      
-        <div class="field-group">
-          <input type="checkbox" class="select-field">
-          <div class="field-name">Did you reach out to any other team?</div>
-          <div>Multi-Check box</div>
-        </div>
-      </div>
-</div>
-
-
-    <!-- Right Panel -->
-    <div class="right-panel">
-      <h3>Field Properties</h3>
-
-      <label>Field Label</label>
-      <input type="text" />
-
-      <label>Description</label>
-      <textarea></textarea>
-
-      <label>In-Line Help</label>
-      <textarea></textarea>
-
-      <div class="checkbox-label">
-        <input type="checkbox" checked />
-        <span>Mark As Required</span>
-      </div>
-
-      <label>Default Option</label>
-      <select>
-        <option></option>
-      </select>
-
-      <label>Lookup Name</label>
-      <input type="text" />
+  
+      <button id="courseNextBtn" onclick="nextCourseTab()">Next</button>
     </div>
   </div>
+    
+  <!-- Contact Form Modal -->
+  <div id="contactModal" class="modal-overlay">
+    <div class="modal-box">
+      <span class="modal-close" onclick="closeContactModal()">×</span>
+      <h2>📞 Contact Us</h2>
+      <p>We’d love to hear from you! Reach out with any questions or feedback.</p>
+      <form id="studentContactForm">
+        <input type="text" class="modal-input" placeholder="Full Name" required />
+        <input type="email" class="modal-input" placeholder="Email Address" required />
+        <input type="tel" class="modal-input" placeholder="Phone Number" required />
+        <textarea class="modal-textarea" placeholder="Your Message..." rows="4" required></textarea>
+        <button type="submit" class="modal-submit-btn">Send</button>
+      </form>
+    </div>
+  </div>
+  
+  
+    <h1>🎓 WELCOME TO AVS COLLEGE OF ARTS AND SCIENCE 🎓</h1>
+    <p>Explore our offered programs and get started on your academic journey.</p>
+  
+    <select id="courseDropdown" onchange="showCourseDetails()">
+      <option value="">-- Choose a Program --</option>
+      <option value="B.Sc. Computer Science">B.Sc. Computer Science</option>
+      <option value="B.Com">B.Com</option>
+      <option value="BBA">BBA</option>
+      <option value="BCA">BCA</option>
+      <option value="BA English">BA English</option>
+      <option value="B.Sc. Mathematics">B.Sc. Mathematics</option>
+      <option value="M.Sc. Computer Science">M.Sc. Computer Science</option>
+      <option value="M.Com">M.Com</option>
+      <option value="MBA">MBA</option>
+      <option value="M.A. English">M.A. English</option>
+    </select>
+  
+    <div id="infoBoxes" class="info-grid">
+      <div class="info-card">
+        <h3>🏫 About AVS College</h3>
+        <p>Leading institution offering arts, science & management programs with academic excellence.</p>
+      </div>
+      <div class="info-card">
+        <h3>👩‍🏫 Experienced Faculty</h3>
+        <p>Highly qualified educators with a passion for student success.</p>
+      </div>
+      <div class="info-card">
+        <h3>🎓 Accredited Programs</h3>
+        <p>All courses are UGC recognized and industry relevant.</p>
+      </div>
+      <div class="info-card">
+        <h3>💼 Placement Assistance</h3>
+        <p>Dedicated placement cell for internships and job support.</p>
+      </div>
+    </div>
+  
+    <!-- Course Info Display -->
+    <div class="glass-box" id="courseInfo" style="display: none;">
+      <h3 id="courseTitle"></h3>
+      <p class="info"><strong>Duration:</strong> <span id="duration"></span></p>
+      <p class="info"><strong>Eligibility:</strong> <span id="level"></span></p>
+      <p class="info"><strong>Mode:</strong> <span id="mode"></span></p>
+      <p class="info"><strong>Total Fee:</strong> <span id="totalFee"></span></p>
+      <p class="info"><strong>Fee Per Year:</strong> <span id="feePerYear"></span></p>
+      <p class="info"><strong>Fee Per Semester:</strong> <span id="feePerSemester"></span></p>
+      <button class="enroll-btn" onclick="openModal()">Enroll Now</button>
+    </div>
+  
+    <div id="enrollModal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h2>Student Registration</h2>
+        <form id="registrationForm">
+          <input type="text" id="studentName" placeholder="Full Name" required />
+          <input type="email" id="studentEmail" placeholder="Email" required />
+          <input type="tel" id="studentPhone" placeholder="Phone Number" required />
+          <input type="text" id="selectedCourse" placeholder="Selected Program" readonly />
+          <select id="batchTime" required>
+            <option value="">Select Preferred Time</option>
+            <option>Morning</option>
+            <option>Afternoon</option>
+          </select>
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+    </div>
+  
+    <div id="courseInfo" style="display:none;">
+      <h2 id="courseTitle"></h2>
+      <p><strong>Duration:</strong> <span id="duration"></span></p>
+      <p><strong>Eligibility:</strong> <span id="level"></span></p>
+      <p><strong>Mode:</strong> <span id="mode"></span></p>
+      <p><strong>Total Fee:</strong> <span id="totalFee"></span></p>
+      <p><strong>Fee Per Year:</strong> <span id="feePerYear"></span></p>
+      <p><strong>Fee Per Semester:</strong> <span id="feePerSemester"></span></p>
+    </div>
+  
 
   <!-- Link your JS -->
   <script src="Newproject.js"></script>

@@ -1,151 +1,146 @@
-const fieldItems = document.querySelectorAll('.field-item');
-const middlePanel = document.querySelector('.middle-panel .section-body');
-const rightPanel = document.querySelector('.right-panel');
-const saveButton = document.getElementById('saveBtn');
-const deleteSelectedBtn = document.getElementById('deleteSelected');
+const popup = document.getElementById("coursePopup");
+const title = document.getElementById("coursePopupTitle");
+const courseList = document.getElementById("coursePopupList");
+const nextBtn = document.getElementById("courseNextBtn");
 
-const formFields = [];
-
-fieldItems.forEach(item => {
-  item.addEventListener('click', () => {
-    const label = item.childNodes[0].nodeValue.trim();
-    const type = item.innerText.split('\n').pop().trim().toLowerCase();
-
-    const fieldData = {
-      label,
-      type,
-      required: true,
-      description: '',
-      help: ''
-    };
-
-    formFields.push(fieldData);
-    addFieldToMiddlePanel(fieldData);
-    showProperties(fieldData);
-  });
-});
-
-function addFieldToMiddlePanel(fieldData) {
-  const newField = document.createElement('div');
-  newField.classList.add('field-group', 'field-row');
-
-  newField.style.display = 'flex';
-  newField.style.justifyContent = 'space-between';
-  newField.style.alignItems = 'center';
-  newField.style.padding = '5px 10px';
-  newField.style.border = '1px solid #ccc';
-  newField.style.borderRadius = '5px';
-  newField.style.marginBottom = '10px';
-
-  newField.innerHTML = `
-    <input type="checkbox" class="select-field" style="margin-right: 10px;">
-    <div class="field-label" style="flex: 1; cursor: pointer;">
-      <div class="field-name">${fieldData.label}</div>
-      <div class="field-type">${fieldData.type}</div>
-    </div>
-  `;
-
-  newField.querySelector('.field-label').addEventListener('click', () => {
-    showProperties(fieldData);
-  });
-
-  middlePanel.appendChild(newField);
-}
-
-function showProperties(fieldData) {
-  rightPanel.innerHTML = `
-    <h3>Field Properties</h3>
-    <label>Field Label</label>
-    <input type="text" value="${fieldData.label}" id="labelInput">
-
-    <label>Description</label>
-    <textarea id="descInput">${fieldData.description}</textarea>
-
-    <label>In-Line Help</label>
-    <textarea id="helpInput">${fieldData.help}</textarea>
-
-    <div class="checkbox-label">
-      <input type="checkbox" id="reqCheck" ${fieldData.required ? 'checked' : ''}>
-      <span>Mark As Required</span>
-    </div>
-  `;
-
-  document.getElementById('labelInput').addEventListener('input', e => fieldData.label = e.target.value);
-  document.getElementById('descInput').addEventListener('input', e => fieldData.description = e.target.value);
-  document.getElementById('helpInput').addEventListener('input', e => fieldData.help = e.target.value);
-  document.getElementById('reqCheck').addEventListener('change', e => fieldData.required = e.target.checked);
-}
-
-// ✅ Common delete button – only delete checked rows
-deleteSelectedBtn.addEventListener('click', () => {
-  const selectedCheckboxes = middlePanel.querySelectorAll('.select-field:checked');
-
-  if (selectedCheckboxes.length === 0) {
-    alert("Please select at least one field to delete.");
-    return;
+const courseSteps = [
+  {
+    title: "UG Courses",
+    courses: [
+      "B.Sc. Computer Science", "B.Com", "BBA",
+      "BCA", "BA English", "B.Sc. Mathematics"
+    ]
+  },
+  {
+    title: "PG Courses",
+    courses: [
+      "M.Sc. Computer Science", "M.Com", "MBA", "M.A. English"
+    ]
+  },
+  {
+    title: "BE Courses",
+    courses: [
+      "B.E. Computer Science", "B.E. Mechanical",
+      "B.E. Electrical", "B.E. Civil"
+    ]
   }
+];
 
-  selectedCheckboxes.forEach(checkbox => {
-    const row = checkbox.closest('.field-group');
-    const label = row.querySelector('.field-name').innerText;
+let currentStep = 0;
 
-    const index = formFields.findIndex(f => f.label === label);
-    if (index !== -1) formFields.splice(index, 1);
+function openCoursePopup() {
+  currentStep = 0;
+  renderCourseStep();
+  popup.style.display = "flex";
+}
 
-    row.remove();
-  });
+function closeCoursePopup() {
+  popup.style.display = "none";
+}
 
-  rightPanel.innerHTML = '';
+function nextCourseTab() {
+  currentStep++;
+  if (currentStep >= courseSteps.length) {
+    closeCoursePopup();
+  } else {
+    renderCourseStep();
+  }
+}
+
+function renderCourseStep() {
+  const step = courseSteps[currentStep];
+  title.textContent = step.title;
+  courseList.innerHTML = step.courses
+    .map(course => `<div>${course}</div>`)
+    .join("");
+  nextBtn.textContent = currentStep === courseSteps.length - 1 ? "Close" : "Next";
+}
+
+function openContactModal() {
+document.getElementById("contactModal").style.display = "flex";
+}
+
+function closeContactModal() {
+document.getElementById("contactModal").style.display = "none";
+}
+
+document.getElementById("studentContactForm").addEventListener("submit", function (e) {
+e.preventDefault();
+alert("✅ Your message has been sent! We'll contact you soon.");
+closeContactModal();
+this.reset();
 });
 
-// Save form preview
-saveButton.addEventListener('click', () => {
-  const existing = document.getElementById('formPreview');
-  if (existing) existing.remove();
+window.addEventListener("click", function (e) {
+const modal = document.getElementById("contactModal");
+if (e.target === modal) {
+  closeContactModal();
+}
+});
 
-  const preview = document.createElement('div');
-  preview.id = 'formPreview';
-  preview.innerHTML = `<h2 style="padding:10px;">Form Preview</h2>`;
-  preview.style.padding = "20px";
-  preview.style.background = "#ffffff";
-  preview.style.borderTop = "2px solid #ccc";
+const courseDetails = {
+  "B.Sc. Computer Science": { fee: "₹35,000", duration: "3 Years", level: "12th Pass (Science Stream)", mode: "Full-time" },
+  "B.Com": { fee: "₹30,000", duration: "3 Years", level: "12th Pass (Commerce Stream)", mode: "Full-time" },
+  "BBA": { fee: "₹32,000", duration: "3 Years", level: "12th Pass", mode: "Full-time" },
+  "BCA": { fee: "₹34,000", duration: "3 Years", level: "12th Pass with Maths", mode: "Full-time" },
+  "BA English": { fee: "₹28,000", duration: "3 Years", level: "12th Pass", mode: "Full-time" },
+  "B.Sc. Mathematics": { fee: "₹30,000", duration: "3 Years", level: "12th Pass (Science Stream)", mode: "Full-time" },
+  "M.Sc. Computer Science": { fee: "₹40,000", duration: "2 Years", level: "B.Sc. Computer Science or BCA", mode: "Full-time" },
+  "M.Com": { fee: "₹38,000", duration: "2 Years", level: "B.Com / BBA", mode: "Full-time" },
+  "MBA": { fee: "₹60,000", duration: "2 Years", level: "Any UG Degree with TANCET / MAT", mode: "Full-time" },
+  "M.A. English": { fee: "₹36,000", duration: "2 Years", level: "BA English", mode: "Full-time" }
+};
 
-  formFields.forEach(field => {
-    const fieldWrapper = document.createElement('div');
-    fieldWrapper.style.marginBottom = '15px';
+function showCourseDetails() {
+  const selected = document.getElementById("courseDropdown").value;
+  const data = courseDetails[selected];
+  const infoBox = document.getElementById("courseInfo");
+  const infoCards = document.getElementById("infoBoxes"); // Optional: if you use info card grid
 
-    const label = document.createElement('label');
-    label.innerText = field.label + (field.required ? ' *' : '');
-    label.style.display = 'block';
-    label.style.marginBottom = '5px';
+  if (data) {
+    const feeTotal = parseInt(data.fee.replace(/[₹,]/g, ""));
+    const years = parseInt(data.duration);
+    const semesters = years * 2;
+    const feePerYear = Math.round(feeTotal / years);
+    const feePerSemester = Math.round(feeTotal / semesters);
 
-    let input;
-    if (field.type.includes('text') || field.type.includes('long')) {
-      input = document.createElement('textarea');
-      input.rows = 3;
-    } else if (field.type.includes('date')) {
-      input = document.createElement('input');
-      input.type = 'date';
-    } else if (field.type.includes('checkbox')) {
-      input = document.createElement('div');
-      input.innerHTML = `
-        <label><input type="checkbox"> Option A</label><br>
-        <label><input type="checkbox"> Option B</label>
-      `;
-    } else if (field.type.includes('pull')) {
-      input = document.createElement('select');
-      input.innerHTML = `<option>Option 1</option><option>Option 2</option>`;
-      if (field.type.includes('multi')) input.multiple = true;
-    } else {
-      input = document.createElement('input');
-      input.type = 'text';
-    }
+    document.getElementById("courseTitle").textContent = selected;
+    document.getElementById("duration").textContent = data.duration;
+    document.getElementById("level").textContent = data.level;
+    document.getElementById("mode").textContent = data.mode;
+    document.getElementById("totalFee").textContent = `₹${feeTotal.toLocaleString()}`;
+    document.getElementById("feePerYear").textContent = `₹${feePerYear.toLocaleString()}`;
+    document.getElementById("feePerSemester").textContent = `₹${feePerSemester.toLocaleString()}`;
 
-    fieldWrapper.appendChild(label);
-    fieldWrapper.appendChild(input);
-    preview.appendChild(fieldWrapper);
-  });
+    infoBox.style.display = 'block';
+    if (infoCards) infoCards.style.display = 'none';
+  } else {
+    infoBox.style.display = 'none';
+    if (infoCards) infoCards.style.display = 'grid';
+  }
+}
 
-  document.body.appendChild(preview);
-  preview.scrollIntoView({ behavior: 'smooth' });
+const modal = document.getElementById("enrollModal");
+
+function openModal() {
+  const course = document.getElementById("courseDropdown").value;
+  document.getElementById("selectedCourse").value = course || "Not selected";
+  modal.style.display = "flex";
+}
+
+function closeModal() {
+  modal.style.display = "none";
+}
+
+window.onclick = function (event) {
+  if (event.target == modal) {
+    closeModal();
+  }
+};
+
+document.getElementById("registrationForm").addEventListener("submit", function (e) {
+  e.preventDefault();
+  alert("✅ Thank you for registering! Our admissions team will contact you shortly.");
+  closeModal();
+  this.reset();
 });
