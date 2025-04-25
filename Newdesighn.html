@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Document</title>
+  <link rel="stylesheet" href="Newdesighn.css" />
+</head>
+<body>
+  <!-- Header -->
+  <div class="header">
+    <button>Back</button>
+    <h1>Add/Edit Case ⚙️</h1>
+    <button id="saveBtn">Save</button>
+  </div>
+
+  <div class="container">
+    <!-- Left Panel -->
+    <div class="left-panel">
+      <h3>Used Fields</h3>
+      <input class="search-box" type="text" placeholder="Search fields..." />
+      <div class="field-item">Date Opened <span style="float:right">Date</span></div>
+      <div class="field-item">Description of the issue <span style="float:right">Text area</span></div>
+      <div class="field-item">Compensation & Benefits <span style="float:right">Pull-Down<br>multiselect</span></div>
+      <div class="field-item">Evaluative Relationships <span style="float:right">Pull-Down<br>multiselect</span></div>
+      <div class="field-item">Peer and Colleague Relationships <span style="float:right">Pull-Down multiselect</span></div>
+      <div class="field-item">Legal, Regulatory, and Finance <span style="float:right">Checkbox multiselect</span></div>
+      <div class="field-item">Risk to Organization <span style="float:right">Long Text</span></div>
+      <div class="field-item">Issue Impact on Organization <span style="float:right">Text area</span></div>
+    </div>
+
+    <!-- Middle Panel -->
+    <div class="middle-panel">
+      <div class="header-row toggle-header">
+        <span>📁 Case Details</span>
+        <span class="icons">
+            <span id="upArrow" style="cursor:pointer; margin-right: 8px;">↑</span>
+            <span id="downArrow" style="cursor:pointer; margin-right: 8px;">↓</span>
+            <button id="deleteSelected">🗑️</button>
+          </span>
+          
+      </div>
+
+      <!-- Field container (toggle target) -->
+      <div class="section-body">
+        <div class="field-group">
+          <input type="checkbox" class="select-field">
+          <div class="field-name">Case ID</div>
+          <div>Text - 50</div>
+
+        </div>
+      
+        <div class="field-group">
+          <input type="checkbox" class="select-field">
+          <div class="field-name">Date Initiated</div>
+          <div>Date</div>
+
+        </div>
+      
+        <div class="field-group">
+          <input type="checkbox" class="select-field">
+          <div class="field-name">Case Name</div>
+          <div>Text - 50</div>
+
+        </div>
+      
+        <div class="field-group">
+          <input type="checkbox" class="select-field">
+          <div class="field-name">Case Status</div>
+          <div>Pull-down box</div>
+
+        </div>
+      
+        <div class="field-group">
+          <input type="checkbox" class="select-field">
+          <div class="field-name">Referral Source</div>
+          <div>Pull-down box</div>
+
+        </div>
+      
+        <div class="field-group">
+          <input type="checkbox" class="select-field">
+          <div class="field-name">Did you reach out to any other team?</div>
+          <div>Multi-Check box</div>
+        </div>
+      </div>
+</div>
+
+
+    <!-- Right Panel -->
+    <div class="right-panel">
+      <h3>Field Properties</h3>
+
+      <label>Field Label</label>
+      <input type="text" />
+
+      <label>Description</label>
+      <textarea></textarea>
+
+      <label>In-Line Help</label>
+      <textarea></textarea>
+
+      <div class="checkbox-label">
+        <input type="checkbox" checked />
+        <span>Mark As Required</span>
+      </div>
+
+      <label>Default Option</label>
+      <select>
+        <option></option>
+      </select>
+
+      <label>Lookup Name</label>
+      <input type="text" />
+    </div>
+  </div>
+
+  <!-- Link your JS -->
+  <script src="Newproject.js"></script>
+</body>
+</html>
