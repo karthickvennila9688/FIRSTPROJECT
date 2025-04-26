@@ -1,4 +1,170 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // Modal functionality
+    const signInBtn = document.querySelector('.sign-in');
+    const joinNowBtn = document.querySelector('.join-now');
+    const signInModal = document.getElementById('signInModal');
+    const joinNowModal = document.getElementById('joinNowModal');
+    const closeSignIn = document.getElementById('closeSignIn');
+    const closeJoinNow = document.getElementById('closeJoinNow');
+
+    // Initialize modals as hidden
+    signInModal.style.display = 'none';
+    joinNowModal.style.display = 'none';
+
+    // Function to handle modal visibility
+    function toggleModal(modal, show) {
+        modal.style.display = show ? 'flex' : 'none';
+    }
+
+    // Function to handle URL hash changes
+    function handleHashChange() {
+        const hash = window.location.hash;
+        
+        // Hide both modals first
+        toggleModal(signInModal, false);
+        toggleModal(joinNowModal, false);
+        
+        // Show the appropriate modal based on hash
+        if (hash === '#signInModal') {
+            toggleModal(signInModal, true);
+        } else if (hash === '#joinNowModal') {
+            toggleModal(joinNowModal, true);
+        }
+    }
+
+    // Initial check on page load
+    handleHashChange();
+
+    // Listen for hash changes
+    window.addEventListener('hashchange', handleHashChange);
+
+    // Button click handlers
+    signInBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        window.location.hash = '#signInModal';
+    });
+
+    joinNowBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        window.location.hash = '#joinNowModal';
+    });
+
+    // Close modal handlers
+    closeSignIn.addEventListener('click', function() {
+        toggleModal(signInModal, false);
+        history.pushState("", document.title, window.location.pathname + window.location.search);
+    });
+
+    closeJoinNow.addEventListener('click', function() {
+        toggleModal(joinNowModal, false);
+        history.pushState("", document.title, window.location.pathname + window.location.search);
+    });
+
+    // Close when clicking outside the modal content
+    window.addEventListener('click', function(e) {
+        if (e.target === signInModal) {
+            toggleModal(signInModal, false);
+            history.pushState("", document.title, window.location.pathname + window.location.search);
+        }
+        if (e.target === joinNowModal) {
+            toggleModal(joinNowModal, false);
+            history.pushState("", document.title, window.location.pathname + window.location.search);
+        }
+    });
+
+    // Form validation for Sign In
+    const signInForm = document.getElementById('signInForm');
+    if (signInForm) {
+        signInForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            let isValid = true;
+            
+            // Validate email
+            const email = document.getElementById('signInEmail');
+            const emailError = document.getElementById('signInEmailError');
+            if (!email.value || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
+                emailError.style.display = 'block';
+                isValid = false;
+            } else {
+                emailError.style.display = 'none';
+            }
+            
+            // Validate password
+            const password = document.getElementById('signInPassword');
+            const passwordError = document.getElementById('signInPasswordError');
+            if (!password.value || password.value.length < 6) {
+                passwordError.style.display = 'block';
+                isValid = false;
+            } else {
+                passwordError.style.display = 'none';
+            }
+            
+            if (isValid) {
+                alert('Sign in successful! Redirecting to your account...');
+                toggleModal(signInModal, false);
+                signInForm.reset();
+                history.pushState("", document.title, window.location.pathname + window.location.search);
+            }
+        });
+    }
+    
+    // Form validation for Join Now
+    const joinNowForm = document.getElementById('joinNowForm');
+    if (joinNowForm) {
+        joinNowForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            let isValid = true;
+            
+            // Validate full name
+            const fullName = document.getElementById('fullName');
+            const fullNameError = document.getElementById('fullNameError');
+            if (!fullName.value) {
+                fullNameError.style.display = 'block';
+                isValid = false;
+            } else {
+                fullNameError.style.display = 'none';
+            }
+            
+            // Validate email
+            const email = document.getElementById('email');
+            const emailError = document.getElementById('emailError');
+            if (!email.value || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
+                emailError.style.display = 'block';
+                isValid = false;
+            } else {
+                emailError.style.display = 'none';
+            }
+            
+            // Validate phone
+            const phone = document.getElementById('phone');
+            const phoneError = document.getElementById('phoneError');
+            if (!phone.value || !/^\d{10,}$/.test(phone.value.replace(/\D/g, ''))) {
+                phoneError.style.display = 'block';
+                isValid = false;
+            } else {
+                phoneError.style.display = 'none';
+            }
+            
+            // Validate password
+            const password = document.getElementById('password');
+            const passwordError = document.getElementById('passwordError');
+            if (!password.value || password.value.length < 6) {
+                passwordError.style.display = 'block';
+                isValid = false;
+            } else {
+                passwordError.style.display = 'none';
+            }
+            
+            if (isValid) {
+                const membershipType = document.querySelector('input[name="membership"]:checked').value;
+                alert(`Registration successful! Welcome to our gym. Your ${membershipType} membership has been activated.`);
+                toggleModal(joinNowModal, false);
+                joinNowForm.reset();
+                history.pushState("", document.title, window.location.pathname + window.location.search);
+            }
+        });
+    }
+
   // Mobile Menu Toggle
   const menuBtn = document.getElementById('menu-btn');
   const navbar = document.querySelector('.navbar');
@@ -139,3 +305,4 @@ document.addEventListener('DOMContentLoaded', function() {
       });
   });
 });
+
