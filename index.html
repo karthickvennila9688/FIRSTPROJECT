@@ -6,6 +6,7 @@
     <title>PowerFit Gym - Transform Your Body</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="Style.css">
+    <script src="Newproject.js"></script>
 </head>
 <body>
     <!-- Header/Navbar -->
@@ -57,67 +58,100 @@
         </div>
     </div>
     
-    <!-- Join Now Modal -->
-    <div class="modal" id="joinNowModal">
-        <div class="modal-content">
-            <span class="close" id="closeJoinNow">&times;</span>
-            <h2>Join Our Gym</h2>
-            <form id="joinNowForm">
-                <div class="form-group">
-                    <label for="fullName">Full Name</label>
-                    <input type="text" id="fullName" required>
-                    <div class="error" id="fullNameError">Please enter your full name</div>
+<!-- Join Now Modal -->
+<div class="modal" id="joinNowModal">
+    <div class="modal-content">
+        <span class="close" id="closeJoinNow">&times;</span>
+        <h2>Join Our Gym</h2>
+        <p class="subtitle">Start your fitness journey today!</p>
+        
+        <form id="joinNowForm">
+            <div class="form-group">
+                <label for="fullName">Full Name</label>
+                <input type="text" id="fullName" placeholder="John Doe" required>
+                <div class="error" id="fullNameError">Please enter your full name</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="john@example.com" required>
+                <div class="error" id="emailError">Please enter a valid email address</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" placeholder="(123) 456-7890" required>
+                <div class="error" id="phoneError">Please enter a valid phone number</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Create Password</label>
+                <input type="password" id="password" required minlength="6" placeholder="••••••">
+                <div class="error" id="passwordError">Password must be at least 6 characters</div>
+            </div>
+            
+            <div class="form-group">
+                <label class="section-label">Membership Type</label>
+                <div class="membership-options">
+                    <label class="membership-option">
+                        <input type="radio" name="membership" value="basic" checked>
+                        <div class="option-card">
+                            <div class="option-title">Basic Membership</div>
+                            <div class="option-price">$29.99/month</div>
+                            <ul class="option-features">
+                                <li>Access to all gym equipment</li>
+                                <li>Free locker usage</li>
+                                <li>Basic classes included</li>
+                            </ul>
+                        </div>
+                    </label>
+                    
+                    <label class="membership-option">
+                        <input type="radio" name="membership" value="premium">
+                        <div class="option-card highlight">
+                            <div class="option-badge">Most Popular</div>
+                            <div class="option-title">Premium Membership</div>
+                            <div class="option-price">$49.99/month</div>
+                            <ul class="option-features">
+                                <li>All Basic benefits</li>
+                                <li>2 personal trainer sessions/month</li>
+                                <li>Access to premium classes</li>
+                                <li>Sauna and spa access</li>
+                            </ul>
+                        </div>
+                    </label>
+                    
+                    <label class="membership-option">
+                        <input type="radio" name="membership" value="annual">
+                        <div class="option-card">
+                            <div class="option-title">Annual Membership</div>
+                            <div class="option-price">$299/year</div>
+                            <div class="option-savings">Save $60 ($25/month)</div>
+                            <ul class="option-features">
+                                <li>All Basic benefits</li>
+                                <li>1 personal trainer session</li>
+                                <li>Free gym merchandise</li>
+                            </ul>
+                        </div>
+                    </label>
                 </div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" required>
-                    <div class="error" id="emailError">Please enter a valid email address</div>
-                </div>
-                <div class="form-group">
-                    <label for="phone">Phone Number</label>
-                    <input type="tel" id="phone" required>
-                    <div class="error" id="phoneError">Please enter a valid phone number</div>
-                </div>
-                <div class="form-group">
-                    <label for="password">Create Password</label>
-                    <input type="password" id="password" required minlength="6">
-                    <div class="error" id="passwordError">Password must be at least 6 characters</div>
-                </div>
-                <div class="form-group">
-                    <label for="membershipType">Membership Type</label>
-                    <div class="membership-options">
-                        <label class="membership-option">
-                            <input type="radio" name="membership" value="basic" checked>
-                            <div class="option-details">
-                                <div class="option-title">Basic Membership</div>
-                                <div class="option-price">$29.99/month</div>
-                            </div>
-                        </label>
-                        <label class="membership-option">
-                            <input type="radio" name="membership" value="premium">
-                            <div class="option-details">
-                                <div class="option-title">Premium Membership</div>
-                                <div class="option-price">$49.99/month</div>
-                                <div>Includes personal trainer sessions</div>
-                            </div>
-                        </label>
-                        <label class="membership-option">
-                            <input type="radio" name="membership" value="annual">
-                            <div class="option-details">
-                                <div class="option-title">Annual Membership</div>
-                                <div class="option-price">$299/year (Save $60)</div>
-                            </div>
-                        </label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="healthInfo">Any health concerns we should know about?</label>
-                    <textarea id="healthInfo" rows="3"></textarea>
-                </div>
-                <button type="submit" class="submit-btn">Complete Registration</button>
-            </form>
-        </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="healthInfo">Any health concerns we should know about?</label>   
+                <textarea id="healthInfo" rows="3" placeholder="E.g. injuries, conditions, etc."></textarea>
+            </div>
+            
+            <div class="form-footer">
+                <button type="submit" class="submit-btn">
+                    <span class="btn-text">Complete Registration</span>
+                    <span class="btn-icon">→</span>
+                </button>
+                <p class="terms-notice">By joining, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></p>
+            </div>
+        </form>
     </div>
+</div>
 
     <!-- Hero Section -->
     <section class="home" id="home">
@@ -127,8 +161,8 @@
                 <h1>transform your <span>body</span> shape with us</h1>
                 <p>Join our gym and get access to world-class equipment, expert trainers, and a supportive community.</p>
                 <div class="home-btns">
-                    <a href="#" class="btn">Get Started</a>
-                    <a href="#" class="btn btn-outline">Learn More</a>
+                    <a href="3joinNowModal" class="btn">Get Started</a>
+                    <a href="#signInModal" class="btn btn-outline">Learn More</a>
                 </div>
             </div>
             <div class="home-image">
@@ -539,6 +573,6 @@
         <i class="fas fa-arrow-up"></i>
     </a>
 
-    <script src="Newproject.js"></script>
+   
 </body>
 </html>
